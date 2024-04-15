@@ -1,0 +1,356 @@
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Base Miner</title>
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/64d37d55cc26a871b02e3902/1h7d236qi';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+    <style>
+        .app__contestmodal {
+            position: fixed;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, .9);
+            top: 0;
+            bottom: 0;
+        }
+
+        .app__contestmodalmargin {
+            margin-bottom: 70px;
+            margin-top: 70px;
+            overflow-y: scroll;
+            width: 70%
+        }
+
+        .app__contestmodalmargin>h5 {
+            color: #f9c34e;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-align: center;
+            width: 100%
+        }
+
+        .app__contestmodalmargin>h6 {
+            color: #f9c34e;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px
+        }
+
+        .app__contestmodalmargin>h6>span {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500
+        }
+
+        .app__contestmodalmargin>p {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 30px
+        }
+
+        .app__contestmodalmargin>p>a {
+            background: linear-gradient(90deg, currentColor 33.33333%, transparent 0 66.66667%, currentColor 0) 0 100% /300% 1px no-repeat;
+            background: linear-gradient(90deg, currentColor 33.33333%, transparent 0 66.66667%, currentColor 0) var(--d, 0) 100% /300% 1px no-repeat;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 400;
+            text-decoration: none;
+            transition: .5s
+        }
+
+        .app__contestmodalmargin>p>a:hover {
+            --d: 100%;
+            color: #f9c34e
+        }
+
+        .app__contestmodalclose {
+            background-color: #f9c34e;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 500;
+            outline: none;
+            padding: 5px 10px;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            transition: .35s
+        }
+
+        .app__contestmodalclose:hover {
+            -webkit-transform: scale(.98);
+            transform: scale(.98)
+        }
+    </style>
+    <style>
+        #Days,
+        #Hours,
+        #Minutes,
+        #Seconds {
+            text-align: center;
+            color: #f9c34e;
+        }
+
+        .time-content {
+            width: 100%;
+            margin: 0;
+            color: white;
+        }
+
+        .time-content p {
+            font-size: 40px;
+            font-weight: 600;
+            text-align: center;
+            font-family: "Chewy";
+            color: white;
+        }
+
+        .time-content small {
+            display: inline-block;
+            width: 60px;
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            border-radius: 3px;
+            background-color: #f9c34e;
+            margin: 10px 7px 0 8px;
+        }
+
+        h2 {
+            color: white;
+        }
+
+        #dateEnd,
+        #action {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .box-time {
+            padding: 9px;
+            margin: 0 10px;
+            position: relative;
+            width: 60px;
+            height: 60px;
+            line-height: 45px;
+            border-radius: 4px;
+            color: #555555;
+            background: rgb(235, 235, 235);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .box-time:before {
+            content: "";
+            background: darkgrey;
+            position: absolute;
+            z-index: 10;
+            top: 31px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            border-bottom: 1px solid #fff;
+        }
+
+        .timerr span {
+            display: grid;
+            justify-content: center;
+            margin: auto;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="App">
+            <div class="home">
+                <div class="container">
+                    <div class="header">
+                        <div>
+                            <a class="nav-item" href=" " target="_blank" rel="noopener noreferrer">
+
+                            </a>
+                            <a class="nav-item" href=" " target="_blank" rel="noopener noreferrer">
+                                HAZE
+                            </a>
+                            <a class="nav-item" href=" " target="_blank" rel="noopener noreferrer">
+                                SOLIDPROOF
+                            </a>
+                        </div>
+                        <img src="images/logo.png" alt="logo" class="logo">
+                        <button v-if="metamaskAccount" @click.prevent="onDisconnect" type="button"
+                            class="walletWrapper">
+                            <span class="address">Disconnect</span>
+                        </button>
+                        <button v-else @click.prevent="onConnect" type="button" class="walletWrapper">
+                            <span class="address">Connect Wallet</span>
+                        </button>
+                    </div>
+
+                    <h1 class="slogan">The Base ETH Pool with the finest daily <br /> return and highest referral reward
+                    </h1>
+                    <div style="text-align:center">
+                    </div>
+                    <div class="mainContent">
+                        <div class="box leftBox">
+                            <div class="dataRow">
+                                <div class="name">Contract</div>
+                                <div class="value">{{getBalance}} ETH</div>
+                            </div>
+                            <div class="dataRow">
+                                <div class="name">Wallet</div>
+                                <div class="value">{{balance}} ETH</div>
+                            </div>
+                            <div class="dataRow">
+                                <div class="name">Your Pizza</div>
+                                <div class="value">{{hatcheryMiners}} Pizza</div>
+                            </div>
+                            <span class="ant-input-affix-wrapper antInput">
+                                <input class="ant-input" v-model="buyAmount" type="text" value="0">
+                                <span class="ant-input-suffix">
+                                    <span class="suffix">ETH</span>
+                                </span>
+                            </span>
+                            <button class="buyButton" @click.prevent="bakePizza">BAKE ETH</button>
+                            <div class="actionWrapper">
+                                <div class="dataRow">
+                                    <div class="name">Your Rewards</div>
+                                    <div class="value">
+                                        <span> {{claimedEggs}} ETH</span>
+                                    </div>
+                                </div>
+                                <div class="actionButtons">
+                                    <button @click.prevent="rebakePizza">RE-BAKE Pizza</button>
+                                    <button>EAT Pizza</button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box rightBox">
+                            <div class="referral">
+                                <h1>Referral Link</h1>
+                                <p>Earn 2% of the ETH used to bake ETH from anyone who uses your referral link</p>
+                                <div class="refWrapper">
+                                    <input v-if="metamaskAccount" id="refArea" class="referralLink" :value="referral" />
+                                    <div v-else @click.prevent="onConnect" class="copyButton"
+                                        style="width:100%; margin-right: 20px;text-align: center;">Connect Wallet</div>
+                                    <button class="copyButton" @click.prevent="copyStringToClipboard">COPY</button>
+                                </div>
+                            </div>
+                            <div class="contractInfo">
+                                <img src="images/grillgif.gif" alt="grill">
+                                <div class="data">
+                                    <h1>Nutrition Facts</h1>
+                                    <div class="dataRow">
+                                        <div class="name">Daily Return</div>
+                                        <div class="value">10%</div>
+                                    </div>
+                                    <div class="dataRow">
+                                        <div class="name">APR</div>
+                                        <div class="value">3650%</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer>
+                        <div class="buttonGroup">
+                            <a class="nav-item" href=" " target="_blank" rel="noopener noreferrer">
+
+                            </a>
+                            <a class="nav-item" href=" " target="_blank" rel="noopener noreferrer">
+                                AUDIT REPORT
+                            </a>
+
+                            <a class="nav-item" @click.prevent="toggleContest">
+
+                            </a>
+                        </div>
+                        <div class="socialMedias">
+                            <a href="https://bscscan.com/address/0xaef10dd120e79f60d61048c306b7379c21d56a38"
+                                target="_blank" rel="noopener noreferrer">
+                                <img src="images/base-logo-in-blue (1).png" alt="basescan">
+                            </a>
+                            <a href="https://twitter.com/BakedPizzaApp" target="_blank" rel="noopener noreferrer">
+                                <img src="images/pngimg.com - twitter_PNG20.png" alt="twitter">
+                            </a>
+                            <a href="https://t.me/bakedpizzacommunity" target="_blank" rel="noopener noreferrer">
+                                <img src="images/2111646.png" alt="telegram">
+                            </a>
+                            <a href="https://hazecrypto.net/audit/Baked_Pizza" target="_blank"
+                                rel="noopener noreferrer">
+                                <img src="images/FinalLogo.png" alt="haze">
+                            </a>
+                            <a href="https://app.solidproof.io/projects/baked-pizza" target="_blank"
+                                rel="noopener noreferrer">
+                                <img src="images/logo_white.png" alt="solidfroof">
+                            </a>
+
+
+
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div v-show="contest" id="contest" class="app__contestmodal" style="display:none">
+            <button class="app__contestmodalclose" @click.prevent="toggleContest">Close</button>
+            <div class="app__contestmodalmargin">
+
+            </div>
+        </div>
+    </div>
+    <script src="cdn.jsdelivr.net/npm/vue%402/dist/vue.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js">
+    </script>
+    <script type="text/javascript" src="unpkg.com/web3%401.2.11/dist/web3.min.js">
+    </script>
+    <script type="text/javascript" src="unpkg.com/web3modal%401.9.0/dist/index.js">
+    </script>
+    <script type="text/javascript" src="unpkg.com/%40walletconnect/web3-provider%401.2.1/dist/umd/index.min.js">
+    </script>
+    <script type="text/javascript" src="js/index30f430f4.js?v=3">
+    </script>
+</body>
+
+
+
+</html>
