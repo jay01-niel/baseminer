@@ -185,6 +185,10 @@ var app = new Vue({
         });
     },
 
+    // eatPizza(){
+    //   alert("hello");
+    // };
+
     bakePizza() {
       let wallet_referrarAddr = "0x9E1A944dE4872fa2fa4a144b1849F0c00C74Cf23";
       let getUrlParameter = function getUrlParameter(sParam) {
@@ -201,6 +205,8 @@ var app = new Vue({
           }
         }
       };
+
+      
 
       let refurl = getUrlParameter("ref");
       if (refurl) {
