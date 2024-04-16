@@ -141,7 +141,7 @@ var app = new Vue({
       if (balance == 0) {
         this.balance = balance;
       } else {
-        this.balance = parseFloat(balance / 1e18).toFixed(4);
+        this.balance = parseFloat(balance / 1e18).toFixed(10);
       }
 
       this.contractInstance = new this.web3Object.eth.Contract(
